@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <title>登录页面</title>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Spring Security演示</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}"> 首页 </a></li>
+
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="container">
+
+    <div class="starter-template">
+        <p th:if="${param.logout}" class="bg-warning">已成功注销</p><!-- 1 -->
+        <p th:if="${param.error}" class="bg-danger">有错误，请重试</p> <!-- 2 -->
+        <h1>作业测试</h1>
+        <br>
+        <h2>📫登录</h2>
+<!--         <p>普通用户账户密码: user/123456</p>
+        <p>管理员账户密码: admin/123456</p> -->
+        <form name="form" th:action="@{/login}" action="/login" method="POST"> <!-- 3 -->
+            <div class="form-group">
+                <label for="username"></label>
+                <input type="text" class="form-control" id="username" name="username" value="" placeholder="邮箱"/>
+                   <br> <button type="button" id="Sms" class="btn btn-primary">获取验证码</button>
+            </div>
+            <div class="form-group">
+                <label for="password"></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="验证码"/>
+               
+            </div>
+            <input type="submit" id="login" value="Login" class="btn btn-primary"/>
+        </form>
+        
+        <div>
+            <a th:href="@{/login/github}">使用github账号登录</a>
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script>
+$(function () {
+   $("#Sms").click(function () {
+       var mobile = $("#username").val();
+       $.get("/code/email?mobile="+mobile,function () {
+           alert("已发送");
+       })
+   })
+});
+</script>
+
+</body>
+</html>
